@@ -1,0 +1,28 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "CyrilTrichereau_6_09022021",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CyrilTrichereau/CyrilTrichereau_6_09022021.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CyrilTrichereau/CyrilTrichereau_6_09022021/issues"
+  },
+  "homepage": "https://github.com/CyrilTrichereau/CyrilTrichereau_6_09022021#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.13",
+    "mongoose-unique-validator": "^2.0.3",
+    "multer": "^1.4.2"
+  }
+}
