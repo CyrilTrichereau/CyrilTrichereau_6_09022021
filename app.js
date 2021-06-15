@@ -9,7 +9,7 @@ const userRoutes = require("./routes/user.js");
 // Connect to mongoose data base
 mongoose
   .connect(
-    "mongodb+srv://masterAccount:vtv07ZUoZzhZ0JFk@cluster0.jcqff.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "mongodb+srv://masterUser:rAaimTKg9xIGBvaB@cluster0.axbxb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => console.log("Connexion success to MongoDB !"))
@@ -37,7 +37,7 @@ app.use(bodyParser.json());
 
 app.use("/images", express.static(path.join(__dirname, "images")));
 
-app.use("/api/sauces", sauceRoutes);
+app.use("/", sauceRoutes);
 app.use("/api/auth", userRoutes);
 
 module.exports = app;

@@ -1,0 +1,47 @@
+[
+    {
+    "userId": "thisIsTheID",
+    "name": "Supa Chili Sauce",
+    "manufacturer": "Bob Company Limited",
+    "description": "Sauce à base de piments forts. A réserver uniquement aux amateurs de sentations fortes !",
+    "mainPepper":  "piment de cayenne",
+    "imageUrl":  "https://cdn.pixabay.com/photo/2017/09/23/18/54/cayenne-peppers-2779828_960_720.jpg",
+    "heat":  5,
+    "likes":  12,
+    "dislikes":  452,
+    "usersLiked": "madeleine, emeline, Richard",
+    "usersDisliked": "nathan, nicolas, arthurine"
+  },
+  {
+    "userId": "anOtherUserID",
+    "name": "Mega bomba",
+    "manufacturer": "Heinz Pittsburgh",
+    "description": "sauce à base d epiments forts. A réserver uniquement aux amateurs de sentations fortes !",
+    "mainPepper":  "piment de cayenne",
+    "imageUrl":  "https://cdn.pixabay.com/photo/2017/09/23/18/54/cayenne-peppers-2779828_960_720.jpg",
+    "heat":  5,
+    "likes":  12,
+    "dislikes":  452,
+    "usersLiked": "madeleine, emeline, Richard",
+    "usersDisliked": "nathan, nicolas, arthurine"
+  },
+  {
+    "userId": "ID Different",
+    "name": "Calient de la muerte",
+    "manufacturer": "Bob Company Limited",
+    "description": "sauce à base d epiments forts. A réserver uniquement aux amateurs de sentations fortes !",
+    "mainPepper":  "piment de cayenne",
+    "imageUrl":  "https://cdn.pixabay.com/photo/2017/09/23/18/54/cayenne-peppers-2779828_960_720.jpg",
+    "heat":  5,
+    "likes":  12,
+    "dislikes":  452,
+    "usersLiked": "madeleine, emeline, Richard",
+    "usersDisliked": "nathan, nicolas, arthurine"
+  },
+  {
+      "id": ["60c4db71552a3aa604afc4ac",
+      "60c4d9617c32a01ec065793f",
+      "60c4db83552a3aa604afc4ad"]
+  }
+]
+

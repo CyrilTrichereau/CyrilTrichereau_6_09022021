@@ -17,6 +17,7 @@ exports.getSauce = (req, res, next) => {
 
 // Post a sauce
 exports.createSauce = (req, res, next) => {
+  console.log(req);
   const sauceObject = JSON.parse(req.body.sauce);
   delete sauceObject._id;
   const sauce = new Sauce({
@@ -25,6 +26,8 @@ exports.createSauce = (req, res, next) => {
       req.file.filename
     }`,
   });
+  sauce.likes = 0;
+  sauce.dislikes = 0;
   sauce
     .save()
     .then(() => {
@@ -73,7 +76,36 @@ exports.deleteSauce = (req, res, next) => {
 
 // Like, unlike or dislike a sauce
 exports.likeSauce = (req, res, next) => {
-  Sauce.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
-    .then(() => res.status(200).json({ message: "Objet modifié !" }))
-    .catch((error) => res.status(400).json({ error }));
-};
+  console.log("trouvé 0");
+  Sauce.findOne({ _id: req.params.id })
+    .then((sauce) => {
+      console.log("trouvé 1");
+  switch (req.body.like){
+  case -1 :
+    console.log("dislike");
+    sauce.dislikes++
+    sauce.usersDisliked.push(req.body.userId)
+    sauce.usersLiked.findOne(req.body.userId)
+    .then (() => {
+      console.log("trouvé");
+      res.status(200).json({ message: "Like modifié !" })
+    })
+  break  
+
+  case 0 :
+    console.log("no say");
+  break  
+  
+  case 1 :
+    console.log("like");
+    sauce.likes++
+    sauce.usersLiked.push(req.body.userId)
+    sauce.usersusersDisliked.findOne(req.body.userId)
+    .then (() => {
+      console.log("trouvé");
+      res.status(200).json({ message: "Like modifié !" })
+    })
+  break  
+  }
+})
+}
