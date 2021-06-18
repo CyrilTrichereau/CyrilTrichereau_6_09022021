@@ -18,7 +18,7 @@ router.get("/api/sauces/:id", auth, saucesCtrl.getSauce);
 router.post("/api/sauces", auth, multer, saucesCtrl.createSauce);
 
 // Modify a sauce
-router.put("api/sauces/:id", auth, multer, saucesCtrl.modifySauce);
+router.put("/api/sauces/:id", auth, multer, saucesCtrl.modifySauce);
 
 // OK ----------------------------------------------
 // Erase a sauce

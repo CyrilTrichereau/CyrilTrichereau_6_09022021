@@ -1,5 +1,6 @@
 const Sauce = require("../models/Sauces.js");
 const fs = require("fs");
+const { findOne } = require("../models/Sauces.js");
 
 // Get all sauces
 exports.getAllSauces = (req, res, next) => {
@@ -76,36 +77,98 @@ exports.deleteSauce = (req, res, next) => {
 
 // Like, unlike or dislike a sauce
 exports.likeSauce = (req, res, next) => {
-  console.log("trouvé 0");
   Sauce.findOne({ _id: req.params.id })
     .then((sauce) => {
-      console.log("trouvé 1");
-  switch (req.body.like){
-  case -1 :
-    console.log("dislike");
-    sauce.dislikes++
-    sauce.usersDisliked.push(req.body.userId)
-    sauce.usersLiked.findOne(req.body.userId)
-    .then (() => {
-      console.log("trouvé");
-      res.status(200).json({ message: "Like modifié !" })
-    })
-  break  
+      let sauceUpdated = { ...sauce._doc };
+      let index;
 
-  case 0 :
-    console.log("no say");
-  break  
-  
-  case 1 :
-    console.log("like");
-    sauce.likes++
-    sauce.usersLiked.push(req.body.userId)
-    sauce.usersusersDisliked.findOne(req.body.userId)
-    .then (() => {
-      console.log("trouvé");
-      res.status(200).json({ message: "Like modifié !" })
+      switch (req.body.like) {
+        // CASE -1 : DISLIKE
+        case -1:
+          console.log("dislike");
+          // Check for already like and erase in array
+          index = sauceUpdated.usersLiked.indexOf(req.body.userId);
+          if (index > -1) {
+            sauceUpdated.usersLiked.splice(index, 1);
+            sauceUpdated.likes--;
+          } else {
+            console.log("error with array remover or nothing to remove");
+          }
+
+          // Check for already dislike or add it
+          index = sauceUpdated.usersDisliked.indexOf(req.body.userId);
+          if (index > -1) {
+            console.log("déjà disliké");
+          } else {
+            console.log(sauceUpdated.dislikes);
+            sauceUpdated.dislikes++;
+            console.log(sauceUpdated.dislikes);
+            console.log(sauceUpdated.usersDisliked);
+            sauceUpdated.usersDisliked.push(req.body.userId);
+            console.log(sauceUpdated.usersDisliked);
+          }
+          break;
+
+        // CASE 0 : UNLIKE
+        case 0:
+          console.log("unlike");
+          // Check for already dislike and erase in array
+          index = sauceUpdated.usersDisliked.indexOf(req.body.userId);
+          if (index > -1) {
+            sauceUpdated.usersDisliked.splice(index, 1);
+            sauceUpdated.dislikes--;
+          } else {
+            console.log("error with array remover or nothing to remove");
+          }
+          // Check for already like and erase in array
+          index = sauceUpdated.usersLiked.indexOf(req.body.userId);
+          if (index > -1) {
+            sauceUpdated.usersLiked.splice(index, 1);
+            sauceUpdated.likes--;
+          } else {
+            console.log("error with array remover or nothing to remove");
+          }
+
+          break;
+
+        // CASE 1 : LIKE
+        case 1:
+          console.log("like");
+          // Check for already dislike and erase in array
+          index = sauceUpdated.usersDisliked.indexOf(req.body.userId);
+          if (index > -1) {
+            sauceUpdated.usersDisliked.splice(index, 1);
+            sauceUpdated.dislikes--;
+          } else {
+            console.log("error with array remover or nothing to remove");
+          }
+          // Check for already like or add it
+          index = sauceUpdated.usersLiked.indexOf(req.body.userId);
+          if (index > -1) {
+            console.log("déjà liké");
+          } else {
+            console.log(sauceUpdated.likes);
+            sauceUpdated.likes++;
+            console.log(sauceUpdated.likes);
+            console.log(sauceUpdated.usersLiked);
+            sauceUpdated.usersLiked.push(req.body.userId);
+            console.log(sauceUpdated.usersLiked);
+          }
+          break;
+      }
+
+      // Update sauce with modified informations
+      console.log("j'arrive à l'update");
+      console.log(sauceUpdated);
+      Sauce.updateOne(
+        { _id: req.params.id },
+        { ...sauceUpdated, _id: req.params.id }
+      )
+        .then(() => {
+          console.log("update finie !");
+          res.status(201).json({ message: "likage mis à jour !" });
+        })
+        .catch((error) => res.status(404).json({ error }));
     })
-  break  
-  }
-})
-}
+    .catch((error) => res.status(404).json({ error }));
+};
