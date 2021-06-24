@@ -6,14 +6,14 @@ const fs = require("fs");
 exports.getAllSauces = (req, res, next) => {
   Sauce.find()
     .then((sauces) => res.status(200).json(sauces))
-    .catch((error) => res.status(400).json({ error }));
+    .catch(() => res.status(400).json({ message: "Entrée incorrecte !" }));
 };
 
 //Get a sauce with Id
 exports.getSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id })
     .then((sauce) => res.status(200).json(sauce))
-    .catch((error) => res.status(404).json({ error }));
+    .catch(() => res.status(404).json({ message: "Entrée incorrecte !" }));
 };
 
 // Post a sauce
@@ -35,11 +35,7 @@ exports.createSauce = (req, res, next) => {
         message: "Sauce enregistrée !",
       });
     })
-    .catch((error) => {
-      res.status(400).json({
-        error: error,
-      });
-    });
+    .catch(() => { res.status(400).json({ message: "Entrée incorrecte !" })});
 };
 
 // Modify a sauce
@@ -61,14 +57,14 @@ exports.modifySauce = (req, res, next) => {
              fs.unlink(`images/${filename}`, () => {});
       }
     })
-    .catch((error) => res.status(404).json({ error }));
+    .catch(() => res.status(404).json({ message: "Entrée incorrecte !" }));
 
   Sauce.updateOne(
     { _id: req.params.id },
     { ...sauceObject, _id: req.params.id }
   )
     .then(() => res.status(200).json({ message: "Sauce modifiée !" }))
-    .catch((error) => res.status(404).json({ error }));
+    .catch(() => res.status(404).json({ message: "Entrée incorrecte !" }));
 };
 
 // Erase a sauce
@@ -79,10 +75,10 @@ exports.deleteSauce = (req, res, next) => {
       fs.unlink(`images/${filename}`, () => {
         Sauce.deleteOne({ _id: req.params.id })
           .then(() => res.status(200).json({ message: "Sauce supprimée !" }))
-          .catch((error) => res.status(404).json({ error }));
+          .catch(() => res.status(404).json({ message: "Entrée incorrecte !" }));
       });
     })
-    .catch((error) => res.status(500).json({ error }));
+    .catch(() => res.status(500).json({ message: "Entrée incorrecte !" }));
 };
 
 // Like, unlike or dislike a sauce
@@ -105,7 +101,7 @@ exports.likeSauce = (req, res, next) => {
           // Check for already dislike or add it
           index = sauceUpdated.usersDisliked.indexOf(req.body.userId);
           if (index > -1) {
-            console.log("Already dislike");
+            console.log("Déjà disliké !");
           } else {
             sauceUpdated.dislikes++;
             sauceUpdated.usersDisliked.push(req.body.userId);
@@ -139,7 +135,7 @@ exports.likeSauce = (req, res, next) => {
           // Check for already like or add it
           index = sauceUpdated.usersLiked.indexOf(req.body.userId);
           if (index > -1) {
-            console.log("déjà liké");
+            console.log("Déjà liké !");
           } else {
             sauceUpdated.likes++;
             sauceUpdated.usersLiked.push(req.body.userId);
@@ -155,7 +151,7 @@ exports.likeSauce = (req, res, next) => {
         .then(() => {
           res.status(201).json({ message: "Sauce modifiée !" });
         })
-        .catch((error) => res.status(404).json({ error }));
+        .catch(() => res.status(404).json({ message: "Entrées incorrectes ! Merci de réessayer" }));
     })
-    .catch((error) => res.status(500).json({ error }));
+    .catch(() => res.status(500).json({ message: "Entrées incorrectes ! Merci de réessayer" }));
 };

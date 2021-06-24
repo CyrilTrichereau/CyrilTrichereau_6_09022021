@@ -9,7 +9,7 @@ const userRoutes = require("./routes/user.js");
 // Connect to mongoose data base
 mongoose
   .connect(
-    "mongodb+srv://masterUser:rAaimTKg9xIGBvaB@cluster0.axbxb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "mongodb+srv://" + (process.env.USER_NAME) + ":" + (process.env.PASSWORD) + "@cluster0.axbxb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => console.log("Connexion success to MongoDB !"))

@@ -16,11 +16,11 @@ exports.signup = (req, res, next) => {
         user
           .save()
           .then(() => res.status(201).json({ message: "Utilisateur créé !" }))
-          .catch((error) => res.status(400).json({ error }));
+          .catch(() => res.status(400).json({ message: "Entrée incorrecte !" }));
       })
-      .catch((error) => res.status(500).json({ error }));
+      .catch(() => res.status(500).json({ message: "Entrée incorrecte !" }));
   } else {
-    res.status(400).json({ message: "Mot de passe pas assez fort" });
+    res.status(400).json({ message: "Merci de rentrer minimum 8 caractères, avec au moins une lettre majuscule, une lettre minuscule, deux chiffres et sans espaces." });
   }
 };
 
@@ -30,7 +30,7 @@ exports.login = (req, res, next) => {
       // We're defaulting to a  max of 3 attempts, resulting in a 2 hour lock
       (MAX_LOGIN_ATTEMPTS = 5), (LOCK_TIME = 2 * 60 * 60 * 1000);
       if (!user) {
-        return res.status(401).json({ error: "Utilisateur non trouvé !" });
+        return res.status(401).json({ message: "Entrée incorrecte !" });
       }
       // check if the account is currently locked
       if (user.isLocked) {
@@ -47,9 +47,7 @@ exports.login = (req, res, next) => {
           if (!valid) {
             // password is incorrect, so increment login attempts before responding
             user.incLoginAttempts(() => {
-              return res
-                .status(401)
-                .json({ error: "Mot de passe incorrect !" });
+              return res.status(401).json({ message: "Mot de passe incorrect !" });
             });
           }
 
@@ -67,9 +65,9 @@ exports.login = (req, res, next) => {
             }),
           });
         })
-        .catch((error) => res.status(500).json({ error }));
+        .catch(() => res.status(500).json({ message: "Entrée incorrecte !" }));
     })
-    .catch((error) => res.status(500).json({ error }));
+    .catch(() => res.status(500).json({ message: "Entrée incorrecte !" }));
 };
 
 // -----------------------------------------------------------------------------------
