@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const path = require("path");
+const helmet = require("helmet");
 
 const sauceRoutes = require("./routes/sauces.js");
 const userRoutes = require("./routes/user.js");
@@ -9,7 +10,7 @@ const userRoutes = require("./routes/user.js");
 // Connect to mongoose data base
 mongoose
   .connect(
-    "mongodb+srv://" + (process.env.USER_NAME) + ":" + (process.env.PASSWORD) + "@cluster0.axbxb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    (process.env.MONGO_URI),
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => console.log("Connexion success to MongoDB !"))
@@ -17,6 +18,9 @@ mongoose
 
 // Init express
 const app = express();
+
+//Init helmet
+app.use(helmet());
 
 // Headers for CORS
 app.use((req, res, next) => {
